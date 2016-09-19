@@ -3,10 +3,7 @@ module AttributesTest exposing (all)
 
 import Test exposing (..)
 import Expect exposing (..)
-import Attributes exposing (Attributes,
-                            attributesFactory,
-                            validAttributesFactory,
-                            valid)
+import Attributes exposing (Attributes, attributesFactory, valid)
 
 
 all : Test
@@ -23,5 +20,17 @@ basics =
           (valid attributesFactory) `equal` False
     , test "should be valid if all properties are at least 100 XP" <|
         \_ ->
-          (valid validAttributesFactory) `equal` True
+          let
+            attrs = { attributesFactory
+                    | str = 100
+                    , bod = 100
+                    , rfl = 100
+                    , dex = 100
+                    , int = 100
+                    , wil = 100
+                    , cha = 100
+                    , edg = 100
+                    }
+          in
+            (valid attrs) `equal` True
     ]

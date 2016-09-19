@@ -4,7 +4,7 @@ module CharacterTest exposing (all)
 import Test exposing (..)
 import Expect exposing (..)
 import Character exposing (Character, characterFactory, valid)
-import Attributes exposing (validAttributesFactory)
+import Attributes exposing (attributesFactory)
 
 
 all : Test
@@ -49,7 +49,16 @@ basics =
                    | firstName  = "John"
                    , lastName   = "Doe"
                    , concept    = ""
-                   , attributes = validAttributesFactory
+                   , attributes = { attributesFactory
+                                  | str = 100
+                                  , bod = 100
+                                  , rfl = 100
+                                  , dex = 100
+                                  , int = 100
+                                  , wil = 100
+                                  , cha = 100
+                                  , edg = 100
+                                  }
                    }
           in
             (valid char) `equal` True

@@ -1,6 +1,5 @@
 module Attributes exposing (Attributes,
                             attributesFactory,
-                            validAttributesFactory,
                             valid)
 
 
@@ -19,11 +18,6 @@ type alias Attributes =
 attributesFactory : Attributes
 attributesFactory =
   Attributes 0 0 0 0 0 0 0 0
-
-{-| Creates a valid attributes type with default values. -}
-validAttributesFactory : Attributes
-validAttributesFactory =
-  Attributes 100 100 100 100 100 100 100 100
 
 {-| Checks the validity of a set of attributes. -}
 valid : Attributes -> Bool
