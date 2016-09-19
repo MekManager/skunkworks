@@ -1,8 +1,8 @@
 import Test
 import Test.Runner.Html
-import Character
+import CharacterTest
 
 
 main : Program Never
 main =
-  Character.all |> Test.Runner.Html.run
+  CharacterTest.all |> Test.Runner.Html.run
