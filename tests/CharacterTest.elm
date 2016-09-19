@@ -4,6 +4,7 @@ module CharacterTest exposing (all)
 import Test exposing (..)
 import Expect exposing (..)
 import Character exposing (Character, characterFactory, valid)
+import Attributes exposing (validAttributesFactory)
 
 
 all : Test
@@ -41,4 +42,15 @@ basics =
             char = { characterFactory | xp = -10 }
           in
             (valid char) `equal` False
+    , test "a concept should not be required to be valid" <|
+        \_ ->
+          let
+            char = { characterFactory
+                   | firstName  = "John"
+                   , lastName   = "Doe"
+                   , concept    = ""
+                   , attributes = validAttributesFactory
+                   }
+          in
+            (valid char) `equal` True
     ]
