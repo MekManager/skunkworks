@@ -3,6 +3,9 @@ module Attributes exposing (Attributes,
                             valid)
 
 
+import String exposing (toUpper)
+
+
 type alias Attributes =
   { str : Int
   , bod : Int

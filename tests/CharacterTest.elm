@@ -3,7 +3,7 @@ module CharacterTest exposing (all)
 
 import Test exposing (..)
 import Expect exposing (..)
-import Character exposing (Character, characterFactory, valid)
+import Character exposing (Character, characterFactory, valid, increaseAttribute)
 import Attributes exposing (attributesFactory)
 
 
@@ -62,4 +62,10 @@ basics =
                    }
           in
             (valid char) `equal` True
+    , test "should have xp equal to the amount given assigned to the specified attribute" <|
+        \_ ->
+          let
+            char = increaseAttribute characterFactory "str" 120
+          in
+            (char.attributes.str == 120 && char.xp == 4880) `equal` True
     ]
