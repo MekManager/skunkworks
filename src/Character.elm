@@ -1,7 +1,9 @@
-module Character exposing (Character,
-                           characterFactory,
-                           increaseAttribute,
-                           valid)
+module Character exposing ( Character
+                          , attrValue
+                          , characterFactory
+                          , increaseAttribute
+                          , valid
+                          )
 
 
 import Attributes exposing (Attributes, attributesFactory, valid)
@@ -15,6 +17,25 @@ type alias Character =
   , concept: String
   , attributes: Attributes
   }
+
+{-| Gets the value of the specified attrubute on a character
+  Note: An attributes value and XP are two different things.
+-}
+attrValue : Character -> String -> Int
+attrValue character name =
+    let
+      attrs = character.attributes
+    in
+      case (toUpper name) of
+        "STR" -> attrs.str // 100
+        "BOD" -> attrs.bod // 100
+        "RFL" -> attrs.rfl // 100
+        "DEX" -> attrs.dex // 100
+        "INT" -> attrs.int // 100
+        "WIL" -> attrs.wil // 100
+        "CHA" -> attrs.cha // 100
+        "EDG" -> attrs.edg // 100
+        _     -> 0
 
 {-| Creates a character type with default values. -}
 characterFactory: Character
