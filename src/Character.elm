@@ -37,12 +37,14 @@ attrValue character name =
         "EDG" -> attrs.edg // 100
         _     -> 0
 
-{-| Creates a character type with default values. -}
+{-| Creates a character type with default values.
+-}
 characterFactory: Character
 characterFactory =
   Character 5000 "" "" "" attributesFactory
 
-{-| Increase the specified skill of a character by the specified XP -}
+{-| Increase the specified skill of a character by the specified XP
+-}
 increaseAttribute: Character -> String -> Int -> Character
 increaseAttribute character name xp =
     let
@@ -83,7 +85,8 @@ increaseAttribute character name xp =
                  }
         _ -> character
 
-{-| Checks the validity of a character type. -}
+{-| Checks the validity of a character type.
+-}
 valid: Character -> Bool
 valid character =
   (character.xp >= 0 &&

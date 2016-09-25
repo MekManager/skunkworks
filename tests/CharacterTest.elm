@@ -56,6 +56,12 @@ basics =
             char = increaseAttribute characterFactory "str" 100
           in
             attrValue char "str" `equal` 1
+    , test "399XP should have a value of 3 for an attribute" <|
+        \_ ->
+          let
+            char = increaseAttribute characterFactory "str" 399
+          in
+            attrValue char "str" `equal` 3
     ]
 
 validity : Test
