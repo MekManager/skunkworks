@@ -3,6 +3,7 @@ import Test.Runner.Html
 import CharacterTest
 import AttributesTest
 import AffiliationTest
+import SkillTest
 
 
 all : Test.Test
@@ -11,6 +12,7 @@ all =
     [ CharacterTest.all
     , AttributesTest.all
     , AffiliationTest.all
+    , SkillTest.all
     ]
 
 main : Program Never
