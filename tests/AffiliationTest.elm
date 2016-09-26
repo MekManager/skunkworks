@@ -2,6 +2,7 @@ module AffiliationTest exposing (all)
 
 
 import Test exposing (..)
+import TestData exposing (..)
 import Expect exposing (..)
 import Attributes exposing (Attributes)
 import Affiliation exposing (Affiliation, languages, valid)
@@ -15,15 +16,9 @@ all =
 basics : Test
 basics =
   let
-    affiliation =
-      Affiliation
-        "Davion"
-        150
-        "English"
-        ["French", "German", "Hindi", "Russian"]
-        (Attributes 25 0 0 0 0 0 0 0)
-    otherAffil = { affiliation | primaryLanguage = "French" }
-    invalidAffil = { affiliation | cost = 0 }
+    affiliation   = davionAffiliation
+    otherAffil    = { affiliation | primaryLanguage = "French" }
+    invalidAffil  = { affiliation | cost = 0 }
     invalidAffil2 = { affiliation | primaryLanguage = "" }
   in
     describe "An Affiliation"

@@ -2,6 +2,7 @@ module CharacterTest exposing (all)
 
 
 import Test exposing (..)
+import TestData exposing (..)
 import Expect exposing (..)
 import Character exposing ( Character
                           , affiliate
@@ -71,28 +72,8 @@ basics =
 affiliation : Test
 affiliation =
   let
-    affiliation =
-        Affiliation
-          "Davion"
-          150
-          "English"
-          ["French", "German", "Hindi", "Russian"]
-          (Attributes 25 0 0 0 0 0 0 0)
-    char = { characterFactory
-           | firstName  = "John"
-           , lastName   = "Doe"
-           , concept    = ""
-           , attributes = { attributesFactory
-                          | str = 100
-                          , bod = 100
-                          , rfl = 100
-                          , dex = 100
-                          , int = 100
-                          , wil = 100
-                          , cha = 100
-                          , edg = 100
-                          }
-          }
+    affiliation = davionAffiliation
+    char = basicCharacter
     affiliated = char `affiliate` affiliation
   in
     describe "A character's affiliations"
@@ -138,21 +119,7 @@ validity =
       , test "a concept should not be required to be valid" <|
           \_ ->
             let
-              char = { characterFactory
-                     | firstName  = "John"
-                     , lastName   = "Doe"
-                     , concept    = ""
-                     , attributes = { attributesFactory
-                                    | str = 100
-                                    , bod = 100
-                                    , rfl = 100
-                                    , dex = 100
-                                    , int = 100
-                                    , wil = 100
-                                    , cha = 100
-                                    , edg = 100
-                                    }
-                     }
+              char = basicCharacter
             in
               (valid char) `equal` True
       ]
