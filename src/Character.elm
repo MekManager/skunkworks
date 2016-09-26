@@ -3,13 +3,19 @@ module Character exposing ( Character
                           , affiliate
                           , characterFactory
                           , increaseAttribute
+                          , unaffiliate
                           , valid
                           )
 
 
-import Attributes exposing (Attributes, attributesFactory, valid)
+import Attributes exposing ( Attributes
+                           , attributesFactory
+                           , combine
+                           , reduce
+                           , valid
+                           )
 import Affiliation exposing (Affiliation)
-import List exposing (member)
+import List exposing (filter, member)
 import String exposing (toUpper)
 
 
@@ -42,7 +48,10 @@ attrValue character name =
         _     -> 0
 
 
-{-| Add an afiliation to a character
+{-| Add an affiliation to a character
+  If the provided character already has that affiliation in their list, then
+  the character will just be returned. Otherwise, the provided affiliation will
+  be added the affiliation list.
 -}
 affiliate : Character -> Affiliation -> Character
 affiliate character affiliation =
@@ -54,7 +63,24 @@ affiliate character affiliation =
     else
       { character
       | affiliations =  affiliation :: affils
+      , attributes = character.attributes `combine` affiliation.attributes
       , xp = character.xp - affiliation.cost
+      }
+
+{-| Remove an affiliation from a character
+-}
+unaffiliate : Character -> Affiliation -> Character
+unaffiliate character affiliation =
+  let
+    affils = character.affiliations
+  in
+    if not (member affiliation affils) then
+      character
+    else
+      { character
+      | affiliations = filter (\a -> a == affiliation) affils
+      , attributes = character.attributes `reduce` affiliation.attributes
+      , xp = character.xp + affiliation.cost
       }
 
 {-| Creates a character type with default values.

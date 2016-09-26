@@ -16,12 +16,12 @@ basics : Test
 basics =
   let
     affiliation =
-        Affiliation
-          "Davion"
-          150
-          "English"
-          ["French", "German", "Hindi", "Russian"]
-          (Attributes 25 0 0 0 0 0 0 0)
+      Affiliation
+        "Davion"
+        150
+        "English"
+        ["French", "German", "Hindi", "Russian"]
+        (Attributes 25 0 0 0 0 0 0 0)
     otherAffil = { affiliation | primaryLanguage = "French" }
     invalidAffil = { affiliation | cost = 0 }
     invalidAffil2 = { affiliation | primaryLanguage = "" }

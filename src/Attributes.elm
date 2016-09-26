@@ -1,6 +1,7 @@
 module Attributes exposing ( Attributes
                            , attributesFactory
                            , combine
+                           , reduce
                            , valid
                            )
 
@@ -38,6 +39,20 @@ combine x y =
     , cha = x.cha + y.cha
     , edg = x.edg + y.edg
     }
+
+{-| Create a new set of attributes by removing y's values from x's -}
+reduce : Attributes -> Attributes -> Attributes
+reduce x y =
+  { x
+  | str = x.str - y.str
+  , bod = x.bod - y.bod
+  , rfl = x.rfl - y.rfl
+  , dex = x.dex - y.dex
+  , int = x.int - y.int
+  , wil = x.wil - y.wil
+  , cha = x.cha - y.cha
+  , edg = x.edg - y.edg
+  }
 
 {-| Checks the validity of a set of attributes. -}
 valid : Attributes -> Bool
