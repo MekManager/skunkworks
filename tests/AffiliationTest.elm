@@ -40,6 +40,12 @@ basics =
       , test "should be valid" <|
           \_ ->
             (valid affiliation) `equal` True
+      , test "should be valid without secondary languages" <|
+          \_ ->
+            let
+              af = { affiliation | secondaryLanguages = [] }
+            in
+              (valid af) `equal` True
       , test "should be invalid" <|
           \_ ->
             (valid invalidAffil) `equal` False

@@ -19,7 +19,7 @@ languages affil =
   if member affil.primaryLanguage affil.secondaryLanguages then
     affil.secondaryLanguages
   else
-    [affil.primaryLanguage] ++ affil.secondaryLanguages
+    affil.primaryLanguage :: affil.secondaryLanguages
 
 valid : Affiliation -> Bool
 valid affil =

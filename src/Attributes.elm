@@ -1,6 +1,8 @@
-module Attributes exposing (Attributes,
-                            attributesFactory,
-                            valid)
+module Attributes exposing ( Attributes
+                           , attributesFactory
+                           , combine
+                           , valid
+                           )
 
 
 import String exposing (toUpper)
@@ -21,6 +23,21 @@ type alias Attributes =
 attributesFactory : Attributes
 attributesFactory =
   Attributes 0 0 0 0 0 0 0 0
+
+{-| Create a new set of attributes by adding two sets together
+-}
+combine : Attributes -> Attributes -> Attributes
+combine x y =
+    { x
+    | str = x.str + y.str
+    , bod = x.bod + y.bod
+    , rfl = x.rfl + y.rfl
+    , dex = x.dex + y.dex
+    , int = x.int + y.int
+    , wil = x.wil + y.wil
+    , cha = x.cha + y.cha
+    , edg = x.edg + y.edg
+    }
 
 {-| Checks the validity of a set of attributes. -}
 valid : Attributes -> Bool

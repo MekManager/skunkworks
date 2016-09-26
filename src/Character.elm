@@ -1,5 +1,6 @@
 module Character exposing ( Character
                           , attrValue
+                          , affiliate
                           , characterFactory
                           , increaseAttribute
                           , valid
@@ -7,6 +8,8 @@ module Character exposing ( Character
 
 
 import Attributes exposing (Attributes, attributesFactory, valid)
+import Affiliation exposing (Affiliation)
+import List exposing (member)
 import String exposing (toUpper)
 
 
@@ -15,6 +18,7 @@ type alias Character =
   , firstName : String
   , lastName : String
   , concept: String
+  , affiliations: List Affiliation
   , attributes: Attributes
   }
 
@@ -37,11 +41,27 @@ attrValue character name =
         "EDG" -> attrs.edg // 100
         _     -> 0
 
+
+{-| Add an afiliation to a character
+-}
+affiliate : Character -> Affiliation -> Character
+affiliate character affiliation =
+  let
+    affils = character.affiliations
+  in
+    if member affiliation affils then
+      character
+    else
+      { character
+      | affiliations =  affiliation :: affils
+      , xp = character.xp - affiliation.cost
+      }
+
 {-| Creates a character type with default values.
 -}
 characterFactory: Character
 characterFactory =
-  Character 5000 "" "" "" attributesFactory
+  Character 5000 "" "" "" [] attributesFactory
 
 {-| Increase the specified skill of a character by the specified XP
 -}

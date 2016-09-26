@@ -3,7 +3,7 @@ module AttributesTest exposing (all)
 
 import Test exposing (..)
 import Expect exposing (..)
-import Attributes exposing (Attributes, attributesFactory, valid)
+import Attributes exposing (Attributes, attributesFactory, combine, valid)
 
 
 all : Test
@@ -33,4 +33,11 @@ basics =
                     }
           in
             (valid attrs) `equal` True
+    , test "should be able to combine two sets of attributes" <|
+        \_ ->
+          let
+            a1 = Attributes 100 100 100 100 100 100 100 100
+            a2 = Attributes 25 25 25 25 25 25 25 25
+          in
+            (a1 `combine` a2) `equal` (Attributes 125 125 125 125 125 125 125 125)
     ]

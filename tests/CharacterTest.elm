@@ -4,18 +4,20 @@ module CharacterTest exposing (all)
 import Test exposing (..)
 import Expect exposing (..)
 import Character exposing ( Character
+                          , affiliate
                           , attrValue
                           , characterFactory
                           , valid
                           , increaseAttribute
                           )
-import Attributes exposing (attributesFactory)
+import Affiliation exposing (Affiliation)
+import Attributes exposing (Attributes, attributesFactory)
 
 
 all : Test
 all =
   Test.concat
-    [ basics, validity ]
+    [ basics, validity, affiliation ]
 
 basics : Test
 basics =
@@ -64,6 +66,40 @@ basics =
             attrValue char "str" `equal` 3
     ]
 
+
+affiliation : Test
+affiliation =
+  let
+    affiliation =
+        Affiliation
+          "Davion"
+          150
+          "English"
+          ["French", "German", "Hindi", "Russian"]
+          (Attributes 25 0 0 0 0 0 0 0)
+    char = { characterFactory
+           | firstName  = "John"
+           , lastName   = "Doe"
+           , concept    = ""
+           , attributes = { attributesFactory
+                          | str = 100
+                          , bod = 100
+                          , rfl = 100
+                          , dex = 100
+                          , int = 100
+                          , wil = 100
+                          , cha = 100
+                          , edg = 100
+                          }
+          }
+    affiliated = affiliate char affiliation
+  in
+    describe "A character's affiliations"
+      [ test "An affiliation should have a cost to the character" <|
+          \_ ->
+            affiliated.xp `equal`  4850
+      ]
+
 validity : Test
 validity =
   describe "A Character's validity"
@@ -80,10 +116,10 @@ validity =
           \_ ->
             let
               char = { characterFactory
-                    | firstName  = "John"
-                    , lastName   = "Doe"
-                    , concept    = ""
-                    , attributes = { attributesFactory
+                     | firstName  = "John"
+                     , lastName   = "Doe"
+                     , concept    = ""
+                     , attributes = { attributesFactory
                                     | str = 100
                                     , bod = 100
                                     , rfl = 100
@@ -93,7 +129,7 @@ validity =
                                     , cha = 100
                                     , edg = 100
                                     }
-                    }
+                     }
             in
               (valid char) `equal` True
       ]
