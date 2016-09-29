@@ -4,6 +4,7 @@ import CharacterTest
 import AttributesTest
 import AffiliationTest
 import SkillTest
+import XpTableTests
 
 
 all : Test.Test
@@ -13,6 +14,7 @@ all =
     , AttributesTest.all
     , AffiliationTest.all
     , SkillTest.all
+    , XpTableTests.all
     ]
 
 main : Program Never
