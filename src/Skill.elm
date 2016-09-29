@@ -1,4 +1,9 @@
-module Skill exposing (..)
+module Skill exposing ( Skill
+                      , complexity
+                      , links
+                      , targetNumber
+                      , value
+                      )
 
 
 import List exposing (head, filter, reverse)
@@ -11,15 +16,42 @@ type alias Skill =
   , subSkills : List String
   , sub : Maybe String
   , targetNumbers : List Int
+  , tiered : Bool
   , complexities : List String
   , links : List (List String)
   , xp : Int
   }
 
+targetNumber : Skill -> String -> Int
+targetNumber skill learning =
+  let
+    skillVal = (value skill learning)
+    isTiered = skill.tiered
+    vals     = skill.targetNumbers
+  in
+    withDefault 0 (tieredValue isTiered skillVal learning vals)
+
+complexity : Skill -> String -> String
+complexity skill learning =
+  let
+    skillVal = (value skill learning)
+    isTiered = skill.tiered
+    vals     = skill.complexities
+  in
+    withDefault "" (tieredValue isTiered skillVal learning vals)
+
+links : Skill -> String -> List String
+links skill learning =
+  let
+    skillVal = (value skill learning)
+    isTiered = skill.tiered
+    vals     = skill.links
+  in
+    withDefault [ "" ] (tieredValue isTiered skillVal learning vals)
+
 
 {-| Finds the value of a particular skill based on an XP table.
 -}
--- "standard"    -> head (filter (\x -> skill.xp >= x) (reverse standard))
 value : Skill -> String -> Int
 value skill learning =
   case learning of
@@ -27,6 +59,9 @@ value skill learning =
     "fastLearner" -> skillValue fastLearner skill.xp
     "slowLearner" -> skillValue slowLearner skill.xp
     _             -> 0
+
+
+-- NOT EXPOSED --
 
 {-| Get the value of a skill based off learning and xp of a skill
   Implementation details:
@@ -45,3 +80,12 @@ value skill learning =
 skillValue : List (Int, Int) -> Int -> Int
 skillValue vals xp =
   fst (withDefault (-1, -1) (head (filter (\x -> xp >= snd x) (reverse vals))))
+
+tieredValue : Bool -> Int -> String -> List a -> Maybe a
+tieredValue isTiered skillVal learning vals =
+  if not isTiered then
+    head vals
+  else
+    case (skillVal <= 3) of
+      True  -> head vals
+      False -> head (reverse vals)
