@@ -74,32 +74,32 @@ affiliation =
   let
     affiliation = davionAffiliation
     char = basicCharacter
-    affiliated = char `affiliate` affiliation
+    affiliatedChar = char `affiliate` affiliation
   in
     describe "A character's affiliations"
       [ test "An affiliation should have a cost to the character" <|
           \_ ->
-            affiliated.xp `equal`  4850
+            affiliatedChar.xp `equal`  4850
       , test "It should get the attribute values from the affiliation" <|
           \_ ->
-            affiliated.attributes.str `equal` 125
+            affiliatedChar.attributes.str `equal` 125
       , test "Should not add an affiliation that a character already has" <|
           \_ ->
             let
-              reAffiliate = affiliated `affiliate` affiliation
+              reAffiliate = affiliatedChar `affiliate` affiliation
             in
               (reAffiliate.xp == 4850 && reAffiliate.attributes.str == 125) `equal` True
       , test "Should be able to remove an affiliation" <|
           \_ ->
             let
-              unAff = affiliated `unaffiliate` affiliation
+              unAff = affiliatedChar `unaffiliate` affiliation
             in
               (unAff.xp == 5000 && unAff.attributes.str == 100) `equal` True
       , test "Should not remove an affiliation it doesn't have" <|
           \_ ->
             let
               newAff = { affiliation | name = "Steiner" }
-              unAff = affiliated `unaffiliate` newAff
+              unAff = affiliatedChar `unaffiliate` newAff
             in
               (unAff.xp == 4850 && unAff.attributes.str == 125) `equal` True
       ]
