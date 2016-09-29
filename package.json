@@ -1,0 +1,25 @@
+{
+  "name": "skunk-works",
+  "version": "0.1.0",
+  "description": "Experiemental stuff",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MekManager/skunkworks.git"
+  },
+  "author": "Eric Hopkins",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/MekManager/skunkworks/issues"
+  },
+  "homepage": "https://github.com/MekManager/skunkworks#readme",
+  "dependencies": {
+    "hack": "^0.7.7"
+  }
+}
