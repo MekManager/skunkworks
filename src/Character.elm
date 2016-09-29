@@ -5,6 +5,10 @@ module Character exposing ( Character
                           , increaseAttribute
                           , unaffiliate
                           , valid
+                          , validXp
+                          , validFirstName
+                          , validLastName
+                          , validAttributes
                           )
 
 
@@ -135,8 +139,42 @@ increaseAttribute character name xp =
 -}
 valid: Character -> Bool
 valid character =
-  (character.xp >= 0 &&
-   character.firstName /= "" &&
-   character.lastName /= "" &&
-   (Attributes.valid character.attributes)
+  (  (fst <| validXp character)
+  && (fst <| validFirstName character)
+  && (fst <| validLastName character)
+  && (fst <| validAttributes character)
   )
+
+{-| Used to check the validity and return a helpful error message.
+-}
+validXp : Character -> (Bool, String)
+validXp character =
+  validator (character.xp >= 0) "This character's XP is below 0."
+
+{-| Used to check the validity and return a helpful error message.
+-}
+validFirstName : Character -> (Bool, String)
+validFirstName character =
+  validator (character.firstName /= "") "This character needs a first name."
+
+{-| Used to check the validity and return a helpful error message.
+-}
+validLastName : Character -> (Bool, String)
+validLastName character =
+  validator (character.lastName /= "") "This character needs a last name."
+
+{-| Used to check the validity and return a helpful error message.
+-}
+validAttributes : Character -> (Bool, String)
+validAttributes character =
+  validator
+  (Attributes.valid character.attributes)
+  "One or more of this characters attributes have a value less than 1."
+
+-- UNEXPOSED --
+
+validator : Bool -> String -> (Bool, String)
+validator cond errorMessage =
+  case cond of
+    True  -> (True, "")
+    False -> (False, errorMessage)
