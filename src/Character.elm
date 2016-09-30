@@ -3,6 +3,7 @@ module Character exposing ( Character
                           , affiliate
                           , characterFactory
                           , increaseAttribute
+                          , increaseSkill
                           , unaffiliate
                           , valid
                           , validXp
@@ -19,7 +20,9 @@ import Attributes exposing ( Attributes
                            , valid
                            )
 import Affiliation exposing (Affiliation)
-import List exposing (filter, member)
+import List exposing (head, filter, map, member)
+import Maybe exposing (withDefault)
+import Skill exposing (Skill)
 import String exposing (toUpper)
 
 
@@ -30,7 +33,56 @@ type alias Character =
   , concept: String
   , affiliations: List Affiliation
   , attributes: Attributes
+  , skills: List Skill
   }
+
+{-| Adds a skill to a character, or adds *to* a skill a character already has
+  NOTE: The amount should really be a `Maybe Int` instead of `Int`
+-}
+increaseSkill : Character -> Skill -> Int -> Character
+increaseSkill character skill amount =
+  let
+    result = findSkill character skill.name (withDefault "" skill.sub)
+  in
+    case result of
+      Nothing -> character `addSkill` skill
+      _       -> incrementSkill character skill amount
+
+{-| Add a skill to a characters list of skills
+-}
+addSkill : Character -> Skill -> Character
+addSkill character skill =
+  { character | skills = skill :: character.skills }
+
+{-| Add the provided XP to the matching skill
+    NOTE: This is hideous and I hate it; but it works...
+-}
+incrementSkill : Character -> Skill -> Int -> Character
+incrementSkill character skill amount =
+  let
+    cs = character.skills
+  in
+    { character
+    | skills =
+        case (skill.sub) of
+          Nothing ->
+            map (\s ->
+                  if (s.name == skill.name && s.sub == Nothing) then
+                    { s | xp = (s.xp + amount) }
+                  else
+                    s
+                ) cs
+          _       ->
+            map (\s ->
+                  if (  s.name == skill.name
+                     && (withDefault "" s.sub) == (withDefault "" skill.sub)
+                     )
+                  then
+                    { s | xp = (s.xp + amount) }
+                  else
+                    s
+                ) cs
+    }
 
 {-| Gets the value of the specified attrubute on a character
   Note: An attributes value and XP are two different things.
@@ -91,7 +143,7 @@ unaffiliate character affiliation =
 -}
 characterFactory: Character
 characterFactory =
-  Character 5000 "" "" "" [] attributesFactory
+  Character 5000 "" "" "" [] attributesFactory []
 
 {-| Increase the specified skill of a character by the specified XP
 -}
@@ -172,6 +224,16 @@ validAttributes character =
   "One or more of this characters attributes have a value less than 1."
 
 -- UNEXPOSED --
+
+findSkill : Character -> String -> String -> Maybe Skill
+findSkill character name sub =
+  case sub of
+    "" -> character.skills
+          |> filter (\s -> s.name == name && (withDefault "" s.sub) == sub)
+          |> head
+    _  -> character.skills
+          |> filter (\s -> s.name == name)
+          |> head
 
 validator : Bool -> String -> (Bool, String)
 validator cond errorMessage =

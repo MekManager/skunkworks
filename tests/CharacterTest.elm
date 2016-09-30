@@ -4,22 +4,27 @@ module CharacterTest exposing (all)
 import Test exposing (..)
 import TestData exposing (..)
 import Expect exposing (..)
+import List exposing (head, length)
+import Maybe exposing (withDefault)
+
 import Character exposing ( Character
                           , affiliate
                           , attrValue
                           , characterFactory
+                          , increaseAttribute
+                          , increaseSkill
                           , unaffiliate
                           , valid
-                          , increaseAttribute
                           )
 import Affiliation exposing (Affiliation)
 import Attributes exposing (Attributes, attributesFactory)
+import Skill exposing (Skill)
 
 
 all : Test
 all =
   Test.concat
-    [ basics, validity, affiliation ]
+    [ basics, validity, affiliation, skills ]
 
 basics : Test
 basics =
@@ -107,19 +112,45 @@ affiliation =
 validity : Test
 validity =
   describe "A Character's validity"
-      [ test "should not be valid without a first and last name" <|
+    [ test "should not be valid without a first and last name" <|
+        \_ ->
+          (valid characterFactory) `equal` False
+    , test "should not be valid with negative xp" <|
+        \_ ->
+          let
+            char = { characterFactory | xp = -10 }
+          in
+            (valid char) `equal` False
+    , test "a concept should not be required to be valid" <|
+        \_ ->
+          let
+            char = basicCharacter
+          in
+            (valid char) `equal` True
+    ]
+
+skills : Test
+skills =
+  let
+    char = characterFactory
+    skill = acrobaticsSkill
+    charWithSkill = increaseSkill char skill 0
+  in
+    describe "Adding Skills to a character"
+      [ test "should add the skill, if the character doesn't already have it" <|
           \_ ->
-            (valid characterFactory) `equal` False
-      , test "should not be valid with negative xp" <|
+            charWithSkill.skills `equal` [ skill ]
+      , test "should not add a skill it already has" <|
           \_ ->
             let
-              char = { characterFactory | xp = -10 }
+              newChar = increaseSkill charWithSkill skill 40
             in
-              (valid char) `equal` False
-      , test "a concept should not be required to be valid" <|
+              length newChar.skills `equal` 1
+      , test "should increase a skill, if the character already has it" <|
           \_ ->
             let
-              char = basicCharacter
+              newChar  = increaseSkill charWithSkill skill 40
+              theSkill = withDefault { skill | xp = 0 } (head newChar.skills)
             in
-              (valid char) `equal` True
+              theSkill.xp `equal` 80
       ]

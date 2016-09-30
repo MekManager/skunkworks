@@ -1,6 +1,8 @@
 module TestData exposing ( basicCharacter
                          , davionAffiliation
                          , validAttrs
+                         , acrobaticsSkill
+                         , computersSkill
                          )
 
 
@@ -35,4 +37,26 @@ validAttrs =
   , wil = 100
   , cha = 100
   , edg = 100
+  }
+
+acrobaticsSkill =
+  { name = "Acrobatics"
+  , subSkills = [ "Free-Fall", "Gymnastics" ]
+  , sub = Nothing
+  , targetNumbers = [ 7 ]
+  , tiered = False
+  , complexities = [ "SB" ]
+  , links = [ [ "RFL" ] ]
+  , xp = 40
+  }
+
+computersSkill =
+  { name = "Computers"
+  , subSkills = []
+  , sub = Nothing
+  , targetNumbers = [ 8, 9 ]
+  , tiered = True
+  , complexities = [ "CB", "CA" ]
+  , links = [ [ "INT" ], [ "DEX", "INT" ] ]
+  , xp = 80
   }

@@ -1,6 +1,7 @@
 module SkillTest exposing (all)
 
 import Test exposing (..)
+import TestData exposing (..)
 import Expect exposing (..)
 import Skill exposing (..)
 
@@ -13,16 +14,7 @@ all =
 basics : Test
 basics =
   let
-    skill =
-      { name = "Acrobatics"
-      , subSkills = [ "Free-Fall", "Gymnastics" ]
-      , sub = Nothing
-      , targetNumbers = [ 7 ]
-      , tiered = False
-      , complexities = [ "SB" ]
-      , links = [ [ "RFL" ] ]
-      , xp = 40
-      }
+    skill = acrobaticsSkill
   in
     describe "A Skill"
       [ test "should have an xp of 40" <|
@@ -42,16 +34,7 @@ basics =
 tiered : Test
 tiered =
   let
-    skill =
-      { name = "Computers"
-      , subSkills = []
-      , sub = Nothing
-      , targetNumbers = [ 8, 9 ]
-      , tiered = True
-      , complexities = [ "CB", "CA" ]
-      , links = [ [ "INT" ], [ "DEX", "INT" ] ]
-      , xp = 80
-      }
+    skill = computersSkill
     advancedSkill = { skill | xp = 120 }
   in
     describe "A tiered skill"
