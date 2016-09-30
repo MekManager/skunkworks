@@ -3,6 +3,7 @@ module Affiliation exposing (Affiliation, languages, valid)
 
 import List exposing (member)
 import Attributes exposing (Attributes)
+import Skill exposing (Skill)
 
 
 type alias Affiliation =
@@ -11,6 +12,7 @@ type alias Affiliation =
   , primaryLanguage : String
   , secondaryLanguages : List String
   , attributes : Attributes
+  , skills : List Skill
   }
 
 

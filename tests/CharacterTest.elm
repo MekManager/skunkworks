@@ -107,6 +107,9 @@ affiliation =
               unAff = affiliatedChar `unaffiliate` newAff
             in
               (unAff.xp == 4850 && unAff.attributes.str == 125) `equal` True
+      , test "Should get it's affiliation's skill(s)" <|
+          \_ ->
+            List.length affiliatedChar.skills `equal` 1
       ]
 
 validity : Test

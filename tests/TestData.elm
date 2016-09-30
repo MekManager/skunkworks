@@ -26,6 +26,7 @@ davionAffiliation =
     "English"
     [ "French", "German", "Hindi", "Russian" ]
     (Attributes 25 0 0 0 0 0 0 0)
+    [ protocolFedSunSkill ]
 
 validAttrs =
   { attributesFactory
@@ -39,6 +40,17 @@ validAttrs =
   , edg = 100
   }
 
+
+protocolFedSunSkill =
+  { name = "Protocol"
+  , subSkills = [ "*" ]
+  , sub = Just "FedSuns"
+  , targetNumbers = [ 5 ]
+  , tiered = False
+  , complexities = [ "SB" ]
+  , links = [ [ "CHA" ] ]
+  , xp = 10
+  }
 acrobaticsSkill =
   { name = "Acrobatics"
   , subSkills = [ "Free-Fall", "Gymnastics" ]

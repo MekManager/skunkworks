@@ -72,7 +72,7 @@ incrementSkill character skill amount =
                   else
                     s
                 ) cs
-          _       ->
+          _ ->
             map (\s ->
                   if (  s.name == skill.name
                      && (withDefault "" s.sub) == (withDefault "" skill.sub)
@@ -117,11 +117,27 @@ affiliate character affiliation =
     if member affiliation affils then
       character
     else
-      { character
-      | affiliations =  affiliation :: affils
-      , attributes = character.attributes `combine` affiliation.attributes
-      , xp = character.xp - affiliation.cost
-      }
+      recurseSkills
+        { character
+        | affiliations =  affiliation :: affils
+        , attributes = character.attributes `combine` affiliation.attributes
+        , xp = character.xp - affiliation.cost
+        }
+        affiliation.skills
+
+
+recurseSkills : Character -> List Skill -> Character
+recurseSkills character skills =
+  case skills of
+    [] -> character
+    (x::xs) ->
+      let
+        -- NOTE: I really should get rid of that Int argument...
+        c = increaseSkill character x x.xp
+      in
+        recurseSkills c xs
+    -- NOTE: this will throw a compiler exception because it's redundant!
+    -- _ -> character
 
 {-| Remove an affiliation from a character
 -}
