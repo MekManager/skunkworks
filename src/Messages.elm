@@ -5,3 +5,5 @@ type Msg
   = FirstName String
   | LastName String
   | Concept String
+  | AddStr
+  | Reset
