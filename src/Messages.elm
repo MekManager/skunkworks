@@ -5,6 +5,8 @@ type Msg
   = FirstName String
   | LastName String
   | Concept String
+  | AddDavion
+  | AddKurita
   | AddStr
   | DecStr
   | AddBod
