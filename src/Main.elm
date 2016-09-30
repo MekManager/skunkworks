@@ -4,6 +4,8 @@ import Html.Events exposing (..)
 import Html.App exposing (beginnerProgram)
 
 import Character exposing (Character, characterFactory)
+import FormControls exposing (..)
+import Messages exposing (..)
 
 
 main =
@@ -17,27 +19,11 @@ view model =
         [ div [ class "cell -6of12" ]
           [ Html.form []
               [ fieldset [ class "form-group" ]
-                  [ label [ for "firstName" ] [ text "First Name:" ]
-                  , input [ id "firstName"
-                          , class "form-control"
-                          , type' "text"
-                          , onInput FirstName ] [ text model.firstName ]
-                  ]
+                  <| firstNameControl model
               , fieldset [ class "form-group" ]
-                  [ label [ for "lastName" ] [ text "First Name:" ]
-                  , input [ id "lastName"
-                          , class "form-control"
-                          , type' "text"
-                          , onInput LastName ] [ text model.lastName ]
-                  ]
+                  <| lastNameControl model
               , fieldset [ class "form-group form-textarea" ]
-                  [ label [ for "concept" ] [ text "Concept:" ]
-                  , textarea [ id "concept"
-                             , class "form-control"
-                             , rows 3
-                             , onInput Concept ] [ text model.concept ]
-
-                  ]
+                  <| conceptControl model
               ]
           ]
         , div [ class "cell -6of12" ]
@@ -56,10 +42,6 @@ view model =
     -- , div [] [ text model.firstName ]
     -- , button [ class "btn btn-default", onClick Increment ] [ text "woah" ]
 
-type Msg
-  = FirstName String
-  | LastName String
-  | Concept String
 
 update msg model =
   case msg of
