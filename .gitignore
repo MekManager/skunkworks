@@ -1,7 +1,8 @@
+#### Elm App ####
 # elm-package generated files
-elm-stuff/
-tests/elm-stuff/
-node_modules/
-target/
+ElmApp/elm-stuff/
+ElmApp/tests/elm-stuff/
+ElmApp/node_modules/
+ElmApp/target/
 # elm-repl generated files
-repl-temp-*
+ElmApp/repl-temp-*

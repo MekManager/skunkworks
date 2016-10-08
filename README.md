@@ -4,4 +4,9 @@
 
 # Skunkworks
 
-This is a place for experimentation, where future ideas are tried out for the MekManager project.
+This is a place for experimentation, where future ideas are tried out for the
+MekManager project.
+
+Projects are separated into their own sub-directories. Each project/experiment
+should have a readme outlining what was a success or failure in the it, and if
+the experiment was a success or failure overall.
