@@ -6,3 +6,6 @@ ElmApp/node_modules/
 ElmApp/target/
 # elm-repl generated files
 ElmApp/repl-temp-*
+
+#### Minimal App ####
+MinimalApp/node_modules/
