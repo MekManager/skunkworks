@@ -1,5 +1,5 @@
 module.exports = {
-  entry: "./entry.js",
+  entry: './entry.js',
   module: {
     loaders: [
       {
@@ -9,14 +9,21 @@ module.exports = {
         query: {
           presets: ['latest']
         }
+      },
+      {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader'
       }
     ]
   },
   plugins: [
-    new (require('webpack-dashboard/plugin'))
+    new (require('webpack-dashboard/plugin'))()
   ],
   output: {
     path: __dirname,
-    filename: "bundle.js"
+    filename: 'bundle.js'
+  },
+  node: {
+    fs: 'empty'
   }
 }
