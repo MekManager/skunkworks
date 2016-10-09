@@ -9,3 +9,4 @@ ElmApp/repl-temp-*
 
 #### Minimal App ####
 MinimalApp/node_modules/
+MinimalApp/bundle.js
