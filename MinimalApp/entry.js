@@ -19,7 +19,7 @@ $(document).ready(function () {
 
   // ============ Init ================
   $('#app').html(CharacterCreator())
-  render({ firstName: '', lastName: '', xp: 5000, characters: [] })
+  render(store.getState())
 
   // ============ Events ================
   _.each(events(store), (e) => $(document).on(e.event, e.on, e.func))

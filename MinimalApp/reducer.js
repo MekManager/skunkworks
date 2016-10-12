@@ -1,4 +1,10 @@
-export default function (state = { characters: [] }, action) {
+const defaultState = {
+  firstName: '',
+  lastName: '',
+  xp: 5000,
+  characters: []
+}
+export default function (state = defaultState, action) {
   switch (action.type) {
   case 'FIRST_NAME':
     return Object.assign({}, state, { firstName: action.value })
