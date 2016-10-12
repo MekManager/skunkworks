@@ -9,10 +9,6 @@ module.exports = {
         query: {
           presets: ['latest']
         }
-      },
-      {
-        test: /\.hbs$/,
-        loader: 'handlebars-loader'
       }
     ]
   },
