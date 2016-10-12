@@ -13,8 +13,10 @@ store.subscribe(() => render(store.getState()))
 
 $(document).ready(function () {
   // ============ Routes ================
+  page.base('/')
   page('/', () => { $('#app').html(CharacterCreator()); render(store.getState()) })
-  page('/characters', () => { $('#app').html(Characters(store.getState())); render(store.getState()) })
+  page('characters', () => { $('#app').html(Characters(store.getState())); render(store.getState()) })
+  page('*', () => { $('#app').html('<h1>404: Not found</h1>') })
   page()
 
   // ============ Init ================
