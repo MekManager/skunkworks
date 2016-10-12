@@ -2,6 +2,7 @@ const defaultState = {
   firstName: '',
   lastName: '',
   xp: 5000,
+  path: '/',
   characters: []
 }
 export default function (state = defaultState, action) {
@@ -22,6 +23,8 @@ export default function (state = defaultState, action) {
                            lastName: '',
                            concept: ''
                          })
+  case 'ROUTE':
+    return Object.assign({}, state, { path: action.value })
   default:
     return state
   }
