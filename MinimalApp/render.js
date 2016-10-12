@@ -5,4 +5,5 @@ export default function (state) {
   $('#debugFName').text(state.firstName)
   $('#debugLName').text(state.lastName)
   $('#debugConcept').text(state.concept)
+  $('#debugCharacterNum').text(state.characters.length)
 }

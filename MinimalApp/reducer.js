@@ -1,4 +1,4 @@
-export default function (state = {}, action) {
+export default function (state = { characters: [] }, action) {
   switch (action.type) {
   case 'FIRST_NAME':
     return Object.assign({}, state, { firstName: action.value })
@@ -6,6 +6,16 @@ export default function (state = {}, action) {
     return Object.assign({}, state, { lastName: action.value })
   case 'CONCEPT':
     return Object.assign({}, state, { concept: action.value })
+  case 'CREATE_CHARACTER':
+    const newCharacter = { firstName: state.firstName, lastName: state.lastName, concept: state.concept }
+    return Object.assign({},
+                         state,
+                         {
+                           characters: [...state.characters, newCharacter],
+                           firstName: '',
+                           lastName: '',
+                           concept: ''
+                         })
   default:
     return state
   }

@@ -1,31 +1,26 @@
 import $ from 'jquery'
+import _ from 'lodash'
+import page from 'page'
 import { createStore } from 'redux'
 import CharacterCreator from './CharacterCreator.js'
+import Characters from './Characters.js'
 import reducer from './reducer.js'
-import renderState from './render.js'
+import render from './render.js'
+import events from './events.js'
 
 let store = createStore(reducer)
-store.subscribe(() => renderState(store.getState()))
+store.subscribe(() => render(store.getState()))
 
 $(document).ready(function () {
-  $('#app').html(CharacterCreator({
-    texts: [
-      { id: 'firstName', label: 'First Name' },
-      { id: 'lastName', label: 'Last Name' }
-    ],
-    textAreas: [
-      { id: 'concept', label: 'Concept' }
-    ]
-  }))
-  renderState({ firstName: '', lastName: '', xp: 5000 })
+  // ============ Routes ================
+  page('/', () => { $('#app').html(CharacterCreator()); render(store.getState()) })
+  page('/characters', () => { $('#app').html(Characters(store.getState())); render(store.getState()) })
+  page()
 
-  $('#firstName').on('keyup', () => {
-    store.dispatch({ type: 'FIRST_NAME', value: $('#firstName').val() })
-  })
-  $('#lastName').on('keyup', () => {
-    store.dispatch({ type: 'LAST_NAME', value: $('#lastName').val() })
-  })
-  $('#concept').on('keyup', () => {
-    store.dispatch({ type: 'CONCEPT', value: $('#concept').val() })
-  })
+  // ============ Init ================
+  $('#app').html(CharacterCreator())
+  render({ firstName: '', lastName: '', xp: 5000, characters: [] })
+
+  // ============ Events ================
+  _.each(events(store), (e) => $(document).on(e.event, e.on, e.func))
 })
