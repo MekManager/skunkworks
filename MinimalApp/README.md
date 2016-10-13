@@ -35,6 +35,8 @@ there are only 3 places where jQuery *conceptually* exists. That is:
   - The entry point (entry.js)
   - The renderer (naturally, it's updating the DOM)
   - The events (they need to DOM to pull values from)
+
+
 Judicious application of unique IDs has prevented a lot of the mind melting
 jQuery calls that became synonymous with the library. So almost every call looks
 like `$('#some-id').func()`. Also because looking up ID attributes is one of the
