@@ -1,0 +1,10 @@
+.character-list {
+  min-height: 100px;
+  padding: 20px;
+  margin: 20px;
+  background-color: aliceblue;
+}
+.character-list .character-listing {
+  margin: 10px 0;
+  background-color: lightgrey;
+}

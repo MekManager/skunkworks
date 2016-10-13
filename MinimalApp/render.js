@@ -7,7 +7,8 @@ import dragula from 'dragula'
  */
 const readyToDrag = (id) => $(`#${id}`).length && !$(`#${id}.dragged`).length
 
-export default function (state) {
+export default function (store) {
+  let state = store.getState()
   switch (state.path) {
     case '/':
       $('#amount').text(state.xp)
@@ -26,6 +27,9 @@ export default function (state) {
         $('#cool-characters').addClass('dragged')
         $('#not-cool-characters').addClass('dragged')
         dragula([document.getElementById('cool-characters'), document.getElementById('not-cool-characters')])
+          .on('drop', (el, target) => {
+            store.dispatch({ type: 'MOVE_CHARACTER', character: $(el).attr('id'), to: $(target).attr('id') })
+          })
       }
       break
     default:
