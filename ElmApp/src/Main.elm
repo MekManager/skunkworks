@@ -25,7 +25,7 @@ skillElem skill =
             Nothing -> skill.name
             _       -> skill.name ++ "/" ++ (withDefault "" skill.sub)
   in
-  li [] [ text  name ]
+    li [] [ text  name ]
 
 view model =
   div []
@@ -47,10 +47,10 @@ view model =
         , div [ class "cell -6of12" ]
           [ b [] [ text "Skills:" ]
           , hr [] []
-          , ul [] (List.map skillElem model.skills)
+          , ul [ id "skills" ] <| List.map skillElem model.skills
           , b [] [ text "Affiliations:" ]
           , hr [] []
-          , ul [] <| List.map (\a -> li [] [ text a.name ]) model.affiliations
+          , ul [ id "affiliations" ] <| List.map (\a -> li [] [ text a.name ]) model.affiliations
           ]
         ]
     , div []

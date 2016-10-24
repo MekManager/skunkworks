@@ -2,3 +2,7 @@ table tbody tr td button {
   display: block !important;
   margin: 0 auto !important;
 }
+
+#skills {
+  cursor: pointer;
+}
