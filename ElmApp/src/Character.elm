@@ -104,9 +104,9 @@ affiliate character affiliation =
     else
       recurseSkills
         { character
-        | affiliations =  affiliation :: affils
-        , attributes = character.attributes `combine` affiliation.attributes
-        , xp = character.xp - affiliation.cost
+        | affiliations = affiliation :: affils
+        , attributes   = character.attributes `combine` affiliation.attributes
+        , xp           = character.xp - affiliation.cost
         }
         affiliation.skills
 
@@ -114,15 +114,13 @@ affiliate character affiliation =
 recurseSkills : Character -> List Skill -> Character
 recurseSkills character skills =
   case skills of
-    [] -> character
+    [] ->
+      character
     (x::xs) ->
       let
-        -- NOTE: I really should get rid of that Int argument...
         c = increaseSkill character x x.xp
       in
         recurseSkills c xs
-    -- NOTE: this will throw a compiler exception because it's redundant!
-    -- _ -> character
 
 {-| Remove an affiliation from a character
 -}
