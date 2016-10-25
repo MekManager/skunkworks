@@ -3,12 +3,15 @@ module Skill exposing ( Skill
                       , links
                       , targetNumber
                       , value
+                      , (:=)
                       )
 
 
 import List exposing (head, filter, reverse)
 import Maybe exposing (withDefault)
 import XpTable exposing (standard, fastLearner, slowLearner)
+
+(~>) = withDefault
 
 
 type alias Skill =
@@ -29,7 +32,7 @@ targetNumber skill learning =
     isTiered = skill.tiered
     vals     = skill.targetNumbers
   in
-    withDefault 0 (tieredValue isTiered skillVal learning vals)
+    0 ~> (tieredValue isTiered skillVal learning vals)
 
 complexity : Skill -> String -> String
 complexity skill learning =
@@ -38,7 +41,7 @@ complexity skill learning =
     isTiered = skill.tiered
     vals     = skill.complexities
   in
-    withDefault "" (tieredValue isTiered skillVal learning vals)
+    "" ~> (tieredValue isTiered skillVal learning vals)
 
 links : Skill -> String -> List String
 links skill learning =
@@ -47,7 +50,7 @@ links skill learning =
     isTiered = skill.tiered
     vals     = skill.links
   in
-    withDefault [ "" ] (tieredValue isTiered skillVal learning vals)
+    [ "" ] ~> (tieredValue isTiered skillVal learning vals)
 
 
 {-| Finds the value of a particular skill based on an XP table.
@@ -59,6 +62,14 @@ value skill learning =
     "fastLearner" -> skillValue fastLearner skill.xp
     "slowLearner" -> skillValue slowLearner skill.xp
     _             -> 0
+
+(:=) : Skill -> Skill -> Bool
+(:=) s1 s2 =
+  case (s1.sub) of
+    Nothing ->
+      s1.name == s2.name && s1.sub == Nothing
+    _       ->
+      s1.name == s2.name && ("" ~> s1.sub) == ("" ~> s2.sub)
 
 
 -- NOT EXPOSED --
@@ -79,7 +90,7 @@ value skill learning =
 -}
 skillValue : List (Int, Int) -> Int -> Int
 skillValue vals xp =
-  fst (withDefault (-1, -1) (head (filter (\x -> xp >= snd x) (reverse vals))))
+  fst ((-1, -1) ~> (head (filter (\x -> xp >= snd x) (reverse vals))))
 
 tieredValue : Bool -> Int -> String -> List a -> Maybe a
 tieredValue isTiered skillVal learning vals =

@@ -23,9 +23,10 @@ import Attributes exposing ( Attributes
 import Affiliation exposing (Affiliation)
 import List exposing (head, filter, map, member)
 import Maybe exposing (withDefault)
-import Skill exposing (Skill)
+import Skill exposing (Skill, (:=))
 import String exposing (toUpper)
 
+(~>) = withDefault
 
 type alias Character =
   { xp : Int
@@ -43,7 +44,7 @@ type alias Character =
 increaseSkill : Character -> Skill -> Int -> Character
 increaseSkill character skill amount =
   let
-    result = findSkill character skill.name (withDefault "" skill.sub)
+    result = findSkill character skill.name ("" ~> skill.sub)
   in
     case result of
       Nothing -> character `addSkill` skill
@@ -65,24 +66,7 @@ incrementSkill character skill amount =
   in
     { character
     | skills =
-        case (skill.sub) of
-          Nothing ->
-            map (\s ->
-                  if (s.name == skill.name && s.sub == Nothing) then
-                    { s | xp = (s.xp + amount) }
-                  else
-                    s
-                ) cs
-          _ ->
-            map (\s ->
-                  if (  s.name == skill.name
-                     && (withDefault "" s.sub) == (withDefault "" skill.sub)
-                     )
-                  then
-                    { s | xp = (s.xp + amount) }
-                  else
-                    s
-                ) cs
+      map (\s -> if s := skill then { s | xp = (s.xp + amount) } else s) cs
     }
 
 {-| Gets the value of the specified attrubute on a character
@@ -288,7 +272,7 @@ findSkill : Character -> String -> String -> Maybe Skill
 findSkill character name sub =
   case sub of
     "" -> character.skills
-          |> filter (\s -> s.name == name && (withDefault "" s.sub) == sub)
+          |> filter (\s -> s.name == name && ("" ~> s.sub) == sub)
           |> head
     _  -> character.skills
           |> filter (\s -> s.name == name)
