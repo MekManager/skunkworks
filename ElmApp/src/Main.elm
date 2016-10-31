@@ -4,7 +4,13 @@ import Html.Events exposing (..)
 import Html.App exposing (beginnerProgram)
 import Maybe exposing (withDefault)
 
-import Character exposing (Character, attrValue, characterFactory, increaseAttribute, decreaseAttribute, affiliate)
+import Character exposing ( Character
+                          , attrValue
+                          , characterFactory
+                          , increaseAttribute
+                          , decreaseAttribute
+                          , affiliate
+                          )
 import Skill exposing (Skill)
 import FormControls exposing (..)
 import DataStructures exposing (..)
@@ -12,6 +18,7 @@ import AttributeTable exposing (attributeTable)
 import Messages exposing (..)
 
 
+main : Program Never
 main =
   let
     char = { characterFactory | skills = [ perceptionSkill, englishLanguage ] }
@@ -27,6 +34,7 @@ skillElem skill =
   in
     li [] [ text  name ]
 
+view : Character -> Html Msg
 view model =
   div []
     [ h1 [] [ text "Character Creator" ]
@@ -50,7 +58,8 @@ view model =
           , ul [ id "skills" ] <| List.map skillElem model.skills
           , b [] [ text "Affiliations:" ]
           , hr [] []
-          , ul [ id "affiliations" ] <| List.map (\a -> li [] [ text a.name ]) model.affiliations
+          , ul [ id "affiliations" ]
+              <| List.map (\a -> li [] [ text a.name ]) model.affiliations
           ]
         ]
     , div []
@@ -60,9 +69,15 @@ view model =
       , p [] [ text <| "last name: " ++ model.lastName ]
       , p [] [ text <| "concept: " ++ model.concept ]
       , p [] [ text <| "skills len:" ++ (toString <| List.length model.skills) ]
-      , button [ class "btn btn-warning", onClick Reset ] [ text "Reset Character" ]
-      , button [ class "btn btn-info", onClick AddDavion ] [ text "Affiliate with House Davion" ]
-      , button [ class "btn btn-info", onClick AddKurita ] [ text "Affiliate with House Kurita" ]
+      , button
+          [ class "btn btn-warning", onClick Reset ]
+          [ text "Reset Character" ]
+      , button
+          [ class "btn btn-info", onClick AddDavion ]
+          [ text "Affiliate with House Davion" ]
+      , button
+          [ class "btn btn-info", onClick AddKurita ]
+          [ text "Affiliate with House Kurita" ]
       ]
     ]
 
@@ -93,4 +108,6 @@ update msg model =
       DecCha         -> decreaseAttribute model "CHA" 10
       AddEdg         -> increaseAttribute model "EDG" 10
       DecEdg         -> decreaseAttribute model "EDG" 10
-      Reset          -> { characterFactory | skills = [ perceptionSkill, englishLanguage ] }
+      Reset          -> { characterFactory
+                        | skills = [ perceptionSkill, englishLanguage ]
+                        }

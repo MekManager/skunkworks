@@ -13,6 +13,7 @@ firstNameControl model =
   , input [ id "firstName"
           , class "form-control"
           , type' "text"
+          , value model.firstName
           , onInput FirstName ] [ text model.firstName ]
   ]
 
@@ -22,6 +23,7 @@ lastNameControl model =
   , input [ id "lastName"
           , class "form-control"
           , type' "text"
+          , value model.lastName
           , onInput LastName ] [ text model.lastName ]
   ]
 
@@ -31,6 +33,7 @@ conceptControl model =
   , textarea [ id "concept"
               , class "form-control"
               , rows 3
+              , value model.concept
               , onInput Concept ] [ text model.concept ]
 
   ]
