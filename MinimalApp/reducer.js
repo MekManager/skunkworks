@@ -34,10 +34,10 @@ export default function (state = defaultState, action) {
     return Object.assign({}, state, { path: action.value })
   case 'MOVE_CHARACTER':
     const character  = _.find(state.characters, (c) => c.id === action.character)
-    console.log(character)
     if (character === undefined) {
-      console.log('is uncool character')
       const uncoolChar = _.find(state.uncoolCharacters, (c) => c.id === action.character)
+      console.log('was uncool character')
+      console.log(uncoolChar)
       if (action.to === 'not-cool-characters') return state // do nothing, already there
       else return Object.assign({},
                                 state,
@@ -45,7 +45,8 @@ export default function (state = defaultState, action) {
                                   uncoolCharacters: _.reject(state.uncoolCharacters, (c) => c.id === action.character)
                                 })
     } else {
-      console.log('is cool character')
+      console.log('was cool character')
+      console.log(character)
       if (action.to === 'cool-characters') return state // do nothing, already there
       else return Object.assign({},
                                 state,
